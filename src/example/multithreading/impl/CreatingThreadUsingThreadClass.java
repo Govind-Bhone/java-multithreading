@@ -10,14 +10,20 @@ public class CreatingThreadUsingThreadClass {
         @Override
         public void run() {
             System.out.println("Hello Thread !");
+            System.out.println("This"+this.getName());
+            System.out.println("This"+Thread.currentThread().getName());
         }
     }
 
     public static void main(String args[]) {
         Thread myThread = new MyThread();
+        Thread.currentThread().setName("Govind-Main");
 
+        System.out.println(Thread.currentThread()+ ":"+Thread.currentThread().getId());
         myThread.start();
+        System.out.println(myThread.getName());
 
+        Thread.yield();
         Thread thread = new Thread(){
             public void run(){
                 System.out.println("Thread Running");
@@ -25,5 +31,20 @@ public class CreatingThreadUsingThreadClass {
         };
 
         thread.start();
+
+        /*Hybrid approach not recommended
+        * why it works ?
+        *
+        * Runnable
+        *    ^
+        *    |
+        *  Thread
+        *    ^
+        *    |
+        *  MyThread
+        *
+        *    */
+        Thread t2 = new Thread(myThread);
+        t2.start();
     }
 }
