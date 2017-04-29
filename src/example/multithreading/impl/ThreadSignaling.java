@@ -4,6 +4,15 @@ package example.multithreading.impl;
  * Created by govind.bhone on 4/17/2017.
  */
 
+
+/**
+ *  wait ,notify , notifyAll methods are present in object class and not
+ * in Thread class because thread invokes those methods on object
+ * and also to call signal methods on any object compulsary thread need to be owner of that object
+ * and thread will be owner of that object iff thread has lock of that object means it should be called inside
+ * synchronized area
+ */
+
 class Chat {
     boolean flag = false;
 
@@ -45,6 +54,7 @@ class T1 implements Runnable {
     public T1(Chat m1) {
         this.m = m1;
         new Thread(this, "Question").start();
+
     }
 
     public void run() {

@@ -9,6 +9,7 @@ public class Reader extends Thread{
     public Reader(Dictionary d, String threadName) {
         this.dictionary = d;
         this.setName(threadName);
+        
     }
 
     private boolean runForestRun = true;
