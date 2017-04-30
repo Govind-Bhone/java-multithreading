@@ -9,7 +9,7 @@ class ThreadB extends Thread {
 
     public void run() {
         synchronized (this) {
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 0; i < 1000; i++) {
                 total += i;
             }
             this.notify(); // IllegalMonitorException without synchronized
@@ -23,6 +23,9 @@ public class ThreadSignalingForSumCalc {
     public static void main(String args[]) throws InterruptedException {
         ThreadB b = new ThreadB();
         b.start();
+        /*Below sleep is just to run the child run method before main thread wait execuction method
+        * to demo signaling disaster due to loss of notification message */
+       Thread.sleep(1000);
 
         /* it is not recommended as
         * 1.  if processing of b thread takes less time (performance penalty)
@@ -40,9 +43,18 @@ public class ThreadSignalingForSumCalc {
         //b.wait();// IllegalMonitorException
 
         synchronized (b) {
-            b.wait();
+            b.wait(1000);
         }
         System.out.println("Total is " + b.total);
         System.out.println("Exiting the main program ....");
     }
+
+
 }
+
+/* Producer - Consumer Problem
+producer thread is responsible for producing items in queue and consumer thread is responsible for to consume
+items from queue . if queue is empty then consumer thread will call wait method and entered into waiting state
+after producing items to the queue producer calls notify method then waiting consumer get that notification
+and will ready to consume updated messages
+ */
