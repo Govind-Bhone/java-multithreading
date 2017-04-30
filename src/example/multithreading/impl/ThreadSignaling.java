@@ -11,6 +11,14 @@ package example.multithreading.impl;
  * and also to call signal methods on any object compulsary thread need to be owner of that object
  * and thread will be owner of that object iff thread has lock of that object means it should be called inside
  * synchronized area
+ * otherwise we will get runtime exception saying IllegalMonitorException
+ * if threads calls wait method on any object it immediately releases the lock of that object
+ * and entered into waiting state ...
+ *
+ * if thread calls notify method on any object it releases the lock of that object
+ * but may not immediately
+ * except wait , notify and notifyAll there is no other method where thread releases the lock
+ *
  */
 
 class Chat {
