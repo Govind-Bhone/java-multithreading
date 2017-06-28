@@ -3,6 +3,10 @@ package example.multithreading.impl;
 /**
  * Created by govind.bhone on 4/24/2017.
  */
+/*
+If main thread calls join method on child thread object and child thread calls join method on main thread object
+then both the threads will wait forever ...and the program will be stucked , this is something like deadlock
+ */
 class JoinThread3 extends Thread {
 
     public static Thread mt;

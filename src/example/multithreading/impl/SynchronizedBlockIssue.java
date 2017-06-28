@@ -8,7 +8,7 @@ class Display3 {
 
     /* sync block are performant than sync method */
     public void syncBlockwishcurrentObj(String name) {
-        ;//hundreads lines of code
+        ;;;;;;;;;;;;;;;//hundreads lines of code
         synchronized (this) {
             for (int i = 0; i < 10; i++) {
                 System.out.print("hello :");

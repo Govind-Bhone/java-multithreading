@@ -4,6 +4,14 @@ package example.multithreading.impl;
  * Created by govind.bhone on 4/27/2017.
  */
 
+/*
+Advantage of synchronized keyword is we can resolve data inconsistency problem
+But disadvantage of using synchronized keyword is it increases waiting time of threads and creates
+performance problem.
+
+hence if there is no specific requirement then it is not recommended to use synchronized keyword .
+*/
+
 class Display {
 
     /* Generate irregular output when  same object method invoked by two threads */
@@ -20,7 +28,9 @@ class Display {
     }
 
 
-    /* Generate regular output when  same object method invoked by two threads */
+    /* Generate regular output when  same object method invoked by two threads
+    * it require object level lock
+    * */
     public synchronized void syncwish1(String name) {
         for (int i = 0; i < 10; i++) {
             System.out.print("hello :");
@@ -47,8 +57,10 @@ class Display {
         }
     }
 
-    /* Generate regular output when  different object method invoked by two threads */
-    public  synchronized static void staticsyncwish(String name) {
+    /* Generate regular output when  different object method invoked by two threads
+    * it require class level lock
+    * */
+    public synchronized static void staticsyncwish(String name) {
         for (int i = 0; i < 10; i++) {
             System.out.print("hello :");
             try {
@@ -71,10 +83,10 @@ class DisplayThread extends Thread {
     }
 
     public void run() {
-        d.syncwish(name);
-        //d.wish(name);
         //d.syncwish(name);
-        //d.staticsyncwish(name);//Display.staticsyncwish(name)
+        // d.wish(name);
+        //d.syncwish(name);
+        d.staticsyncwish(name);//Display.staticsyncwish(name)
     }
 }
 
@@ -88,10 +100,10 @@ class DisplayThread2 extends Thread {
     }
 
     public void run() {
-        d.syncwish1(name);
-        //d.wish(name);
+        //d.syncwish1(name);
+       // d.wish(name);
         //d.syncwish(name);
-        //d.staticsyncwish(name);//Display.staticsyncwish(name)
+        d.staticsyncwish(name);//Display.staticsyncwish(name)
     }
 }
 
@@ -105,7 +117,7 @@ public class SynchronizeMethodIssue {
         t2.start();*/
 
         DisplayThread t1 = new DisplayThread(d1, "dhoni");
-        DisplayThread2 t2 = new DisplayThread2(d1, "yuvraj");
+        DisplayThread2 t2 = new DisplayThread2(d2, "yuvraj");
         t1.start();
         t2.start();
     }
